@@ -1,6 +1,6 @@
 # jdbc2sms
 sending SMS from one of the RDBMS table
-![ComponentDiagram](ComponentDiagram.jpg)
-![main actor](main actors.jpg)
-![SMS life cycle](SMS life cycle.jpg)
-![Steps description](Steps description.jpg)
+![ComponentDiagram](https://i.postimg.cc/0NYM1rkS/jdbc2sms-Component-Diagram.jpg)
+![Steps description](https://i.postimg.cc/T27y6z6t/jdbc2sms-Steps-Description.jpg)
+![main actor](https://i.postimg.cc/cCrLCJSX/jdbc2sms-mainactors.jpg)
+![SMS life cycle](https://i.postimg.cc/9fh0bVdQ/jdbc2sms-SMSlifecycle.jpg)
