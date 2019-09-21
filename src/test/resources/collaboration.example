@@ -1,0 +1,49 @@
+wrong password
+
+========= send message ===========
+>>>request:
+http://smsc.ru/sys/send.php?id=634761894&sender=myself&time=0&fmt=2&mes=hello%3A22%3A35%3A64&psw=technik&charset=utf-8&login=technik&phones=%2B380954670000
+
+<<<response:
+<result>
+<id>634761894</id>
+<cnt>1</cnt>
+</result>
+
+----------------
+
+========= invalid phone number ===========
+>>>request:
+http://smsc.ru/sys/send.php?id=113581144&sender=myself&time=0&fmt=2&mes=hello%3A22%3A45%3A895&psw=technik&charset=utf-8&login=technik&phones=%2B38095467
+
+<<<response:
+<result>
+<error>invalid number</error>
+<error_code>7</error_code>
+<id>113581144</id>
+</result>
+
+----------------
+
+========= check status of message ===========
+>>>request:
+http://smsc.ru/sys/status.php?id=634761894&phone=%2B380954670000&fmt=2&psw=technik&charset=utf-8&login=technik&all=1
+
+<<<response:
+
+<sms>
+<status>1</status>
+<last_date>02.02.2015 22:37:00</last_date>
+<last_timestamp>1422909420</last_timestamp>
+<send_date>02.02.2015 22:36:56</send_date>
+<send_timestamp>1422909416</send_timestamp>
+<phone>380954670000</phone>
+<cost>0.18</cost>
+<sender_id>SMSC.UA~myself</sender_id>
+<status_name>Доставлено</status_name>
+<message>hello:22:35:64</message>
+</sms
+
+----------------
+
+634761894

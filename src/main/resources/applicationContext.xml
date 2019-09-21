@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+    xmlns:xsi=    "http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns=        "http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jpa=    "http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="
+                http://www.springframework.org/schema/beans     
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/context 
+                http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/data/jpa
+    			http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                ">
+
+	<context:annotation-config />
+	
+	<!-- database properties -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>database.properties</value>
+		</property>
+	</bean>
+
+
+	<!-- class with main logic -->
+	<bean id="enterPoint" class="com.cherkashyn.vitalii.smscenter.SenderUpdater">
+		<constructor-arg index="0" ref="knowledgeBase" />
+		<constructor-arg index="1" ref="smsGateway" />
+		<!-- need to check delivery status  -->
+		<constructor-arg index="2" value="true" />
+	</bean>
+	
+
+	<!-- KnowledgeBase -->
+	<bean id="knowledgeBase" class="com.cherkashyn.vitalii.smscenter.knowledgebase.DatabaseKnowledgeBase">
+		<constructor-arg index="0" ref="finder" />
+		<constructor-arg index="1" ref="repository" />
+	</bean>
+	
+	<!-- SmsGateway/SmsCenter -->
+	<bean id="smsGateway" class="com.cherkashyn.vitalii.smscenter.gateway.SmsCenter">
+		<constructor-arg index="0" value="${gateway.login}" />
+		<constructor-arg index="1" value="${gateway.password}" />
+		<constructor-arg index="2" value="${gateway.sign}" />
+	</bean>
+
+
+
+	<!-- DataSource
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	 -->
+	 
+	<bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	    <property name="initialSize" value="3"/>
+	</bean>	 
+
+	<!-- Finder -->
+	<bean id="finder" class="com.cherkashyn.vitalii.smscenter.knowledgebase.FinderSql">
+		<constructor-arg index="0" value="${sql.finder.for_sending}" />
+		<constructor-arg index="1" value="${sql.finder.for_checking}"  />
+	</bean>
+
+	<!-- Repository -->
+	<bean id="repository" class="com.cherkashyn.vitalii.smscenter.knowledgebase.RepositorySql">
+		<!-- create -->
+		<constructor-arg index="0" value="${sql.repository.insert}" />
+		
+		<!-- update send time  -->
+		<constructor-arg index="1" value="${sql.repository.update_as_sent}" />
+		
+		<!-- update delivery time  -->
+		<constructor-arg index="2" value="${sql.repository.update_as_delivered}" />
+		
+		<!-- delete -->
+		<constructor-arg index="3" value="${sql.repository.delete}" />
+	</bean>
+
+
+
+</beans>
